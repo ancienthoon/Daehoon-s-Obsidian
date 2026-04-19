@@ -1,6 +1,6 @@
 [[OOP기본용어]]
 [[생성자와 소멸자]]
-[[OOP 기출]]
+[[OOP 예상문제]]
 [[this, static, const]]
 ## 1. [Node] 클래스와 객체의 기초 (Class & Object)
 
