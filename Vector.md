@@ -13,8 +13,6 @@
 
 처음에 행과 열의 크기를 전혀 몰라도 아래와 같이 구현할 수 있습니다.
 
-C++
-
 ```cpp
 #include <iostream>
 #include <vector>
