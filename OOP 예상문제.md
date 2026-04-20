@@ -277,3 +277,56 @@ int main() {
     cout << a.get() << " " << b.get() << endl;
 }
 ```
+
+```cpp
+class Item {
+    int val;
+public:
+    Item(int v = 0) : val(v) {
+        cout << "생성자\n";
+    }
+    Item(const Item& obj) : val(obj.val) {
+        cout << "복사생성자\n";
+    }
+    ~Item() { cout << "소멸자\n"; }
+    int get() { return val; }
+};
+
+Item add(Item a, Item& b) {
+    a.val += b.get();
+    return a;
+}
+
+int main() {
+    Item n1(10), n2(20);
+    Item n3 = add(n1, n2);
+    cout << n3.get() << endl;
+}
+```
+
+```cpp
+class Bank {
+    string owner;
+    int balance;
+public:
+    Bank(string o, int b) : owner(o), balance(b) {}
+    void deposit(int n) { balance += n; }
+    void transfer(Bank& to, int n) {
+        balance -= n;
+        to.deposit(n);
+    }
+    void print() {
+        cout << owner << " " << balance << endl;
+    }
+};
+
+int main() {
+    Bank a("Kim", 1000), b("Lee", 500);
+    Bank c = a;
+    a.transfer(b, 300);
+    c.transfer(a, 100);
+    a.print();
+    b.print();
+    c.print();
+}
+```
