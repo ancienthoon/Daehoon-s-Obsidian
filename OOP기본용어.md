@@ -1,233 +1,399 @@
-
-
----
-
-# 🏗️ C++ 클래스의 기초 (Class Basics)
-
-> [!abstract] **핵심 개념**
-> 
-> - **클래스(Class):** 객체를 만들기 위한 **설계도(추상화)**. C언어의 `struct`가 진화한 형태.
->     
-> - **객체(Object):** 클래스라는 설계도로부터 실제로 만들어진 **실체(인스턴스)**.
->     
+# 📘 C++ 9장 — 다형성 (Polymorphism)
 
 ---
 
-## 1. 클래스 vs 구조체 vs 객체
+## 🔖 목차
 
-|**구분**|**설명**|**비유**|
-|---|---|---|
-|**클래스 (Class)**|멤버 변수(속성)와 멤버 함수(동작)의 집합|붕어빵 틀|
-|**객체 (Object)**|클래스 타입으로 선언된 변수|실제 붕어빵|
-|**구조체 (C)**|데이터(변수)만 묶어놓은 형태|단순 포장지|
-
----
-
-## 2. 클래스의 구성 요소
-
-### ① 멤버 변수 (Fields)
-
-- 객체의 **상태**나 **속성**을 나타냅니다.
-    
-- 예: 고양이의 이름, 나이, 색상 등.
-    
-
-### ② 멤버 함수 (Methods)
-
-- 객체의 **동작**이나 **기능**을 나타냅니다.
-    
-- 예: 먹는다, 잔다, 야옹한다 등.
-    
-- 클래스 내부에서 선언하고, 외부에서 `::`(범위 지정 연산자)를 사용하여 정의할 수 있습니다.
-    
+1. [[#다형성이란]]
+2. [[#객체 포인터의 형변환]]
+3. [[#가상 함수 virtual function]]
+4. [[#동적 바인딩 vs 정적 바인딩]]
+5. [[#가상 소멸자 virtual destructor]]
+6. [[#순수 가상 함수와 추상 클래스]]
+7. [[#추상 클래스를 인터페이스로]]
+8. [[#핵심 정리]]
 
 ---
 
-## 3. 접근 제어자 (Access Specifiers)
+## 📌 다형성이란
 
-캡슐화를 구현하기 위해 사용하며, 클래스 멤버의 공개 범위를 결정합니다.
+> **개념**: 객체들의 타입이 달라도 **똑같은 메시지(함수 호출)**에 대해 각자 다르게 동작하는 것
 
-- `public`: 클래스 외부 어디서든 접근 가능. (보통 함수에 사용)
-    
-- `private`: 클래스 내부 멤버 함수에서만 접근 가능. (보통 변수에 사용, **데이터 보호**)
-    
-- `protected`: 상속 관계에서 자식 클래스에게만 접근 허용.
-    
+```
+speak() 호출
+  ├── Dog 객체  → "멍멍"
+  └── Cat 객체  → "야옹"
+```
+
+- 하나의 코드로 다양한 타입의 객체를 처리할 수 있음
+- 객체지향 프로그래밍의 핵심 기술 중 하나
 
 ---
 
-## 💻 실전 코드: Car 클래스 예제
+## 📌 객체 포인터의 형변환
 
-파일 분할(헤더/소스)과 멤버 함수 중복 정의(오버로딩)를 포함한 표준 구조입니다.
+### 상향 형변환 (Upcasting)
 
-### 📝 car.h (헤더 파일)
+> 자식 클래스 타입 → 부모 클래스 타입으로 변환 (**자식이 부모로 위장**)
 
 ```cpp
-#pragma once
-#include <string>
+Dog a;
+Animal *pa = &a;       // ✅ OK — 부모 포인터로 자식 객체 가리킴
+pa = new Dog();        // ✅ OK
 
-using namespace std;
+Animal a;
+Dog *ps = &a;          // ❌ Error — 자식 포인터는 부모 객체 가리킬 수 없음
+```
 
-class Car {
-private:
-    int speed;
-    int gear;
-    string color;
+### 상향 형변환 후 접근 제한
 
+```cpp
+Shape *ps = new Rectangle();   // 상향 형변환
+ps->setOrigin(10, 10);         // ✅ 부모(Shape) 멤버함수 — 가능
+ps->setWidth(100);             // ❌ 자식(Rectangle) 멤버함수 — 불가
+```
+
+> **이유**: `ps`는 Shape 포인터로 선언됐으므로 컴파일러는 Shape로만 간주
+
+### 하향 형변환 (Downcasting)
+
+> 부모 포인터 → 자식 포인터로 변환하여 자식 멤버 접근
+
+```cpp
+Shape *ps = new Rectangle();            // 상향 형변환
+
+// 방법 1 — 새 포인터 변수 사용
+Rectangle *pr = (Rectangle *) ps;
+pr->setWidth(100);                       // ✅ 자식 함수 사용 가능
+
+// 방법 2 — 인라인 형변환
+((Rectangle *) ps)->setWidth(100);      // ✅ 동일한 결과
+```
+
+### 형변환 규칙 요약
+
+|방향|가능 여부|설명|
+|---|---|---|
+|자식 → 부모 (상향)|✅ 가능|자동 형변환|
+|부모 → 자식 (하향)|⚠️ 명시적 캐스팅 필요|`(자식타입 *)` 로 변환|
+|자식 포인터 → 부모 객체|❌ 불가|컴파일 오류|
+
+### 부모 타입 매개변수의 장점
+
+```cpp
+// 이렇게 하면 Shape의 모든 자식(Circle, Rectangle, ...)을 한 함수로 받을 수 있음
+void move(Shape& s, int sx, int sy) {
+    s.setOrigin(sx, sy);
+}
+
+Rectangle r;  move(r, 0, 0);   // ✅
+Circle c;     move(c, 10, 10); // ✅
+```
+
+---
+
+## 📌 가상 함수 virtual function
+
+### 문제 상황 — 가상 함수 없을 때
+
+```cpp
+Shape *ps = new Rectangle();
+ps->draw();   // → Shape의 draw() 호출 ← 원하는 게 아님!
+```
+
+> 부모 포인터이므로 항상 **부모의 함수**가 호출됨
+
+### 해결 — virtual 키워드 사용
+
+```cpp
+class Shape {
 public:
-    int getSpeed();            // 게터(Getter)
-    void setSpeed(int s);      // 세터(Setter)
-    void setSpeed(double s);   // 함수 중복 정의(Overloading)
-    void honk();
+    virtual void draw() {         // ← virtual 선언
+        cout << "Shape Draw" << endl;
+    }
+};
+
+class Rectangle : public Shape {
+public:
+    void draw() {                 // 재정의 (overriding)
+        cout << "Rectangle Draw" << endl;
+    }
+};
+
+class Circle : public Shape {
+public:
+    void draw() {
+        cout << "Circle Draw" << endl;
+    }
 };
 ```
 
-### 📝 car.cpp (멤버 함수 본체)
-
 ```cpp
-#include <iostream>
-#include "car.h"
+Shape *ps = new Rectangle();
+ps->draw();   // → "Rectangle Draw" ✅ 실제 객체 기준으로 호출
 
-using namespace std;
-
-int Car::getSpeed() {
-    return speed;
-}
-
-void Car::setSpeed(int s) {
-    if (s >= 0) speed = s; // 데이터 유효성 검사 가능
-}
-
-void Car::setSpeed(double s) {
-    speed = (int)s;
-}
-
-void Car::honk() {
-    cout << "빵빵!" << endl;
-}
+Shape *ps1 = new Circle();
+ps1->draw();  // → "Circle Draw"   ✅
 ```
 
-### 📝 main.cpp (실행 파일)
+### 가상 함수 동작 원리
 
-```cpp
-#include <iostream>
-#include "car.h"
-
-using namespace std;
-
-int main() {
-    ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-
-    Car myCar;               // 객체 생성
-    myCar.setSpeed(80);      // 멤버 함수 호출
-    myCar.honk();
-
-    cout << "현재 속도: " << myCar.getSpeed() << endl;
-    return 0;
-}
+```
+부모 포인터로 가상 함수 호출
+  → 컴파일러: "이 포인터가 실제로 무엇을 가리키는가?" 실행 시간에 확인
+  → 실제 객체(Rectangle)의 draw() 호출
 ```
 
----
+### 가상 함수 규칙
 
-# 🧊 클래스의 동적 생성 (Dynamic Allocation)
+- 부모에서 `virtual` 선언하면 **자식의 동일 원형 함수도 자동으로 가상함수**
+- 자식 클래스의 재정의 함수는 `virtual` 생략 가능 (붙여도 됨)
+- **함수 원형(이름, 반환형, 매개변수)이 동일**해야 재정의(overriding) 성립
 
-> [!abstract] **핵심 요약**
-> 
-> - **키워드:** `new` (생성 및 할당), `delete` (해제)
->     
-> - **메모리 영역:** **힙(Heap)** 영역에 할당됩니다. (일반 변수는 스택에 할당)
->     
-> - **특징:** 개발자가 직접 생성과 소멸 시점을 결정할 수 있습니다.
->     
-
----
-
-## 1. 정적 생성 vs 동적 생성 비교
-
-|**구분**|**정적 생성 (Static)**|**동적 생성 (Dynamic)**|
-|---|---|---|
-|**선언 방식**|`Car myCar;`|`Car* pCar = new Car();`|
-|**메모리 위치**|스택 (Stack)|**힙 (Heap)**|
-|**접근 방식**|마침표 `.` 연산자|**화살표 `->` 연산자**|
-|**생명 주기**|함수 종료 시 자동 소멸|**`delete`를 하기 전까지 생존**|
-
----
-
-## 2. 주요 연산자 및 사용법
-
-### ① 생성: `new` 연산자
-
-객체를 힙에 할당하고, 그 객체의 **주소값**을 반환합니다. 따라서 반드시 **포인터 변수**로 받아야 합니다.
+### 배열로 다형성 활용
 
 ```cpp
-Car* pCar = new Car(); // 기본 생성자 호출
+Shape *arrayOfShapes[3];
+arrayOfShapes[0] = new Rectangle();
+arrayOfShapes[1] = new Triangle();
+arrayOfShapes[2] = new Circle();
+
+for (int i = 0; i < 3; i++)
+    arrayOfShapes[i]->draw();
+// Rectangle Draw
+// Triangle Draw
+// Circle Draw
 ```
 
-### ② 접근: `->` (화살표 연산자)
+> **다형성 장점**: 새로운 도형 클래스가 추가되어도 **main()의 루프 코드는 수정 불필요**
 
-포인터를 통해 객체의 멤버에 접근할 때 사용합니다.
+### 가상 함수 사용 전후 비교
+
 ```cpp
-pCar->setSpeed(100);
-cout << pCar->getSpeed();
+// ❌ 가상 함수 없을 때 — 변수를 여러 개 써야 함
+Dog* p1 = new Dog();   p1->speak();
+Cat* p2 = new Cat();   p2->speak();
+
+// ✅ 가상 함수 사용 — 변수 1개로 처리 가능
+Animal* a = new Dog();   a->speak();   // 멍멍
+a = new Cat();           a->speak();   // 야옹
 ```
 
-### ③ 해제: `delete` 연산자
+### ⚠️ 가상 함수는 포인터/참조자에서만 작동
 
-동적으로 생성된 객체는 함수가 끝나도 자동으로 사라지지 않습니다. 사용이 끝나면 반드시 메모리를 수동으로 비워줘야 합니다. (**메모리 누수 방지**)
 ```cpp
-delete pCar; // 소멸자 호출 및 메모리 해제
-pCar = nullptr; // (권장) 해제 후 포인터를 비워둠
+Dog d;
+Animal a1 = d;      // 복사본 — 가상함수 작동 안함 ❌
+a1.speak();         // → "Animal speak()" 출력
+
+Animal &a1 = d;     // 참조자 — 가상함수 작동 ✅
+a1.speak();         // → "멍멍" 출력
 ```
 
 ---
 
-## 💻 실전 코드 예시 (Car 클래스 활용)
+## 📌 동적 바인딩 vs 정적 바인딩
+
+> **바인딩(Binding)**: 함수 호출 코드와 실제 실행할 함수를 연결하는 것
+
+|구분|결정 시점|속도|대상|
+|---|---|---|---|
+|**정적 바인딩** (static binding)|컴파일 시간|빠름|일반 함수|
+|**동적 바인딩** (dynamic binding)|실행 시간|상대적으로 느림|**가상 함수**|
+
+```
+정적: Shape *ps = new Rectangle();  ps->draw();
+      → 컴파일 시점에 "Shape::draw() 호출" 으로 고정
+
+동적: Shape *ps = new Rectangle();  ps->draw();  (draw가 virtual)
+      → 실행 시점에 ps가 가리키는 실제 객체 확인 → Rectangle::draw() 호출
+```
+
+---
+
+## 📌 가상 소멸자 virtual destructor
+
+### 문제 상황
 
 ```cpp
-#include <iostream>
-#include <string>
+Animal *a1 = new Dog();
+a1->speak();
+delete a1;
+// → Animal 소멸자만 호출 ❌
+// → Dog 소멸자 호출 안됨 → 메모리 누수!
+```
 
-using namespace std;
+> `a1`이 Animal 포인터이므로 `delete` 시 Animal 소멸자만 호출
 
-class Car {
-private:
-    int speed;
+### 해결 — 소멸자를 virtual로 선언
+
+```cpp
+class Animal {
 public:
-    Car() : speed(0) { cout << "차량이 생성되었습니다.\n"; }
-    ~Car() { cout << "차량이 소멸되었습니다.\n"; } // 소멸자
-    void setSpeed(int s) { speed = s; }
-    int getSpeed() { return speed; }
+    virtual ~Animal() { cout << "Animal 소멸자" << endl; }  // virtual
 };
 
-int main() {
-    ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+class Dog : public Animal {
+public:
+    virtual ~Dog() { cout << "Dog 소멸자" << endl; }        // virtual
+};
 
-    // 1. 객체 하나를 동적 생성
-    Car* myCar = new Car();
-    
-    myCar->setSpeed(120);
-    cout << "현재 속도: " << myCar->getSpeed() << "\n";
+Animal *a1 = new Dog();
+delete a1;
+// 출력:
+// Dog 소멸자    ← 자식 먼저
+// Animal 소멸자 ← 그 다음 부모 자동 호출
+```
 
-    // 2. 객체 배열을 동적 생성
-    Car* carArray = new Car[3]; // 3개의 차량 객체 생성
-    carArray[0].setSpeed(50);   // 배열 요소 접근은 . 사용 가능
+### 소멸자 호출 순서
 
-    // 3. 반드시 해제 필요
-    delete myCar;         // 단일 객체 해제
-    delete[] carArray;    // 객체 배열 해제 (괄호 주의)
+```
+delete 부모포인터
+  → 가상 소멸자 → 실제 객체 확인
+  → 자식 소멸자 호출 (자식 메모리 해제)
+  → 부모 소멸자 자동 호출 (부모 메모리 해제)
+```
 
-    return 0;
-}
+### ⚠️ 핵심 규칙
+
+> **다형성(가상 함수)을 사용하는 클래스라면 소멸자를 반드시 `virtual`로 선언!** 부모 클래스의 소멸자에 `virtual` 붙이면 자식 소멸자는 자동으로 가상함수화
+
+---
+
+## 📌 순수 가상 함수와 추상 클래스
+
+### 순수 가상 함수 (Pure Virtual Function)
+
+> **함수 헤더(원형)만 있고 본체가 없는 가상 함수** 자식 클래스에게 "이 함수는 반드시 네가 직접 구현해라"는 강제 지시
+
+```cpp
+virtual 반환형 함수이름(매개변수) = 0;
+
+// 예시
+virtual void draw() = 0;
+```
+
+### 추상 클래스 (Abstract Class)
+
+> **순수 가상 함수를 하나 이상 포함한 클래스**
+
+```cpp
+class Shape {
+public:
+    virtual void draw() = 0;   // 순수 가상 함수
+};
+
+class Line : public Shape {
+public:
+    void draw() {              // ✅ 자식이 구현
+        cout << "직선을 그린다" << endl;
+    }
+};
+
+class Circle : public Shape {
+public:
+    void draw() {              // ✅ 자식이 구현
+        cout << "원을 그린다" << endl;
+    }
+};
+```
+
+```cpp
+Shape s;    // ❌ 오류 — 추상 클래스는 객체 생성 불가
+Circle c;   // ✅ OK
+
+Shape *ps = new Line();    // ✅ 포인터는 가능
+ps->draw();                // "직선을 그린다"
+```
+
+### 가상 함수 vs 순수 가상 함수
+
+|구분|가상 함수|순수 가상 함수|
+|---|---|---|
+|선언|`virtual void f()`|`virtual void f() = 0`|
+|본체|있음 (기본 구현 제공)|없음|
+|자식 구현|선택|**강제**|
+|객체 생성|가능|불가 (추상 클래스)|
+
+### 언제 쓰는가?
+
+```
+가상 함수      → 부모에 기본 구현이 있고, 자식이 필요하면 재정의
+순수 가상 함수 → 자식마다 구현이 완전히 달라 부모에 기본 구현이 의미 없을 때
 ```
 
 ---
 
-## ⚠️ 주의사항 (Mistakes to avoid)
+## 📌 추상 클래스를 인터페이스로
 
-1. **메모리 누수(Memory Leak):** `new`를 하고 `delete`를 하지 않으면 프로그램이 종료될 때까지 메모리를 계속 점유합니다.
-    
-2. **댕글링 포인터(Dangling Pointer):** `delete`를 한 뒤에도 포인터 변수가 주소값을 갖고 있는 경우입니다. 해제 후에는 `pCar = nullptr;` 처리를 하는 것이 안전합니다.
-    
-3. **이중 해제(Double Free):** 이미 해제된 메모리를 다시 `delete`하면 프로그램이 충돌합니다.
+> 다양한 객체들이 **공통된 이름의 함수**로 동작하도록 규격(인터페이스)을 정의할 때 사용
 
-[[has-a 관계]] [[상속관계]] [[is-a 관계]] [[다형성]]
+### 홈 네트워킹 예제
+
+```cpp
+class RemoteControl {
+public:
+    virtual void turnON()  = 0;   // 순수 가상함수 — 규격만 정의
+    virtual void turnOFF() = 0;
+};
+
+class Television : public RemoteControl {
+public:
+    void turnON()  { /* TV 켜는 실제 코드 */ }
+    void turnOFF() { /* TV 끄는 실제 코드 */ }
+};
+
+class Refrigerator : public RemoteControl {
+public:
+    void turnON()  { /* 냉장고 켜는 실제 코드 */ }
+    void turnOFF() { /* 냉장고 끄는 실제 코드 */ }
+};
+
+// 홈 네트워킹 시스템 — 부모 포인터 하나로 모든 가전 제어
+RemoteControl *p;
+p = new Television();   p->turnON();    // TV 켜짐
+p = new Refrigerator(); p->turnON();    // 냉장고 켜짐
+```
+
+---
+
+## 🗂️ 핵심 정리
+
+### 개념 계층 정리
+
+```
+다형성 (Polymorphism)
+  └── 가상 함수 (virtual)
+        ├── 일반 가상 함수    → 부모에 기본 구현 있음
+        ├── 순수 가상 함수    → = 0, 본체 없음
+        │     └── 추상 클래스 → 객체 생성 불가, 인터페이스 역할
+        └── 가상 소멸자       → delete 시 자식 소멸자 정상 호출
+```
+
+### 전체 요약표
+
+|개념|키워드|핵심|
+|---|---|---|
+|상향 형변환|자동|자식 → 부모, 부모 멤버만 사용 가능|
+|하향 형변환|`(자식타입*)`|자식 멤버 사용하려면 명시적 캐스팅|
+|가상 함수|`virtual`|실제 객체 기준으로 함수 결정 (동적 바인딩)|
+|가상 소멸자|`virtual ~`|다형성 사용 시 **반드시** 선언|
+|순수 가상 함수|`= 0`|자식에게 구현 강제|
+|추상 클래스|순수 가상 포함|객체 생성 불가, 인터페이스로 활용|
+
+### ⚠️ 최다 실수 포인트
+
+|실수 유형|올바른 내용|
+|---|---|
+|가상 함수를 일반 객체로 사용|`Animal a = dog` → 가상함수 작동 안함, 포인터/참조자 필요|
+|가상 소멸자 빠뜨림|다형성 사용 시 부모 소멸자에 `virtual` 필수 → 자식 메모리 누수 방지|
+|추상 클래스 객체 생성 시도|`Shape s` → 컴파일 오류, 포인터만 가능|
+|자식에서 순수 가상 함수 구현 안 함|자식도 추상 클래스가 됨 → 역시 객체 생성 불가|
+
+---
+
+> 📅 작성일: 2026-05-14 🏫 과목: C++ / 자료구조 📖 단원: 9장 — 다형성, 가상 함수, 순수 가상 함수
+
+#cpp #다형성 #polymorphism #virtual #추상클래스
+
+[[has-a 관계]] [[is-a 관계]]

@@ -2,6 +2,8 @@
 [[생성자와 소멸자]]
 [[OOP 예상문제]]
 [[this, static, const]]
+[[프렌드와 연산자 중복]]
+
 ## 1. [Node] 클래스와 객체의 기초 (Class & Object)
 
 > [!abstract] **개념 설명**
