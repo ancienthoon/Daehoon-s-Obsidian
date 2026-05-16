@@ -243,3 +243,108 @@ int main()
     return 0;
 }
 ```
+
+## 9장
+
+> 상속과 가상함수를 이용해서 원과 직선을 그리는 과제(그래픽 필요X)
+
+```cpp
+// oop_91_20253334.txt
+
+#include <iostream>
+using namespace std;
+
+// ─────────────────────────────────────
+// Point 클래스
+// ─────────────────────────────────────
+class Point {
+private:
+    int x, y;
+
+public:
+    Point(int x = 0, int y = 0) : x(x), y(y) {}
+
+    int getX() const { return x; }
+    int getY() const { return y; }
+};
+
+// ─────────────────────────────────────
+// Shape 클래스 (부모)
+// ─────────────────────────────────────
+class Shape {
+private:
+    Point start;   // 좌상단점
+    Point end;     // 우하단점
+
+public:
+    // 생성자: 시작점, 끝점 좌표를 인자로 받아 저장
+    Shape(int x1, int y1, int x2, int y2)
+        : start(x1, y1), end(x2, y2) {
+    }
+
+    // 공통 Draw(): 좌표 출력 담당
+    void Draw() const {
+        cout << "  좌상단점: (" << start.getX() << ", " << start.getY() << ")" << endl;
+        cout << "  우하단점: (" << end.getX() << ", " << end.getY() << ")" << endl;
+    }
+
+    // 순수 가상함수: 자식이 반드시 구현해야 함
+    virtual void Draw(int dummy) const = 0;
+
+    virtual ~Shape() {}
+};
+
+// ─────────────────────────────────────
+// Line 클래스 (자식)
+// ─────────────────────────────────────
+class Line : public Shape {
+public:
+    Line(int x1, int y1, int x2, int y2)
+        : Shape(x1, y1, x2, y2) {
+    }
+
+    // 다른 부분: "직선 그린다" 출력
+    // 공통 부분: Shape::Draw() 호출
+    void Draw(int dummy = 0) const override {
+        cout << "직선 그린다" << endl;
+        Shape::Draw();   // 좌표 출력 (공통)
+    }
+};
+
+// ─────────────────────────────────────
+// Circle 클래스 (자식)
+// ─────────────────────────────────────
+class Circle : public Shape {
+public:
+    Circle(int x1, int y1, int x2, int y2)
+        : Shape(x1, y1, x2, y2) {
+    }
+
+    // 다른 부분: "원 그린다" 출력
+    // 공통 부분: Shape::Draw() 호출
+    void Draw(int dummy = 0) const override {
+        cout << "원 그린다" << endl;
+        Shape::Draw();   // 좌표 출력 (공통)
+    }
+};
+
+// ─────────────────────────────────────
+// main
+// ─────────────────────────────────────
+void main() {
+    Circle a(1, 1, 5, 5);
+    Line   b(5, 5, 9, 9);
+
+    a.Draw();   // 원 그린다 + 좌표
+    b.Draw();   // 직선 그린다 + 좌표
+
+    Shape* p;
+    p = new Line(10, 10, 100, 100);
+    p->Draw(0);   // 직선 그린다 + 좌표
+
+    p = new Circle(100, 100, 200, 200);
+    p->Draw(0);   // 원 그린다 + 좌표
+
+    delete p;
+}
+```
