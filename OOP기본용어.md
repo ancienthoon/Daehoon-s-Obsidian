@@ -396,4 +396,5 @@ p = new Refrigerator(); p->turnON();    // 냉장고 켜짐
 
 #cpp #다형성 #polymorphism #virtual #추상클래스
 
-[[has-a 관계]] [[is-a 관계]]
+[[has-a 관계]] [[is-a 관계]] [[상속관계]]
+
