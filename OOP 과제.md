@@ -363,3 +363,293 @@ void main() {
     delete p;
 }
 ```
+
+## 10장
+
+### 10_1장
+
+> 벡터를 나타내는 Vector 클래스에 다음 연산자들을 구성하고 멤버함수로 구현
+
+```cpp
+//코드 예시
+int main() {  
+Vector a(1, 2), b(2, 3), c;  
+c = a – b; // c = a - b; 에서 a 값 변화 없음  
+cout << a << “ , “ << b << “ , “ << c;  
+  
+a = b; // a = a b 수행, a를 반환  operator = 함수 작성  
+cout << a << “ , “ << b << “ , “ << c;  
+  
+a -= c; // a = a-c 수행 , a를 반환  operator-= 함수 작성  
+cout << a << “ , “ << b << “ , “ << c;  
+  
+return 0;  
+}
+```
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Vector
+{
+private:
+    int x, y;
+    
+public:
+    // 생성자
+    Vector(int xx = 0, int yy = 0) : x(xx), y(yy) {}
+    
+    // operator- (멤버함수): c = a - b
+    // a와 b는 변화 없음, 새로운 Vector 반환
+    Vector operator-(const Vector& other) const
+    {
+        Vector result(x - other.x, y - other.y);
+        return result;
+    }
+    
+    // operator+= (멤버함수): a += b
+    // a를 변화시키고 자신을 반환
+    Vector& operator+=(const Vector& other)
+    {
+        x += other.x;
+        y += other.y;
+        return *this;
+    }
+    
+    // operator-= (멤버함수): a -= c
+    // a를 변화시키고 자신을 반환
+    Vector& operator-=(const Vector& other)
+    {
+        x -= other.x;
+        y -= other.y;
+        return *this;
+    }
+    
+    // operator<< (비멤버함수): cout << a
+    friend ostream& operator<<(ostream& os, const Vector& v);
+    
+    // getter (for debugging)
+    int getX() const { return x; }
+    int getY() const { return y; }
+};
+
+// operator<< 구현 (비멤버함수)
+ostream& operator<<(ostream& os, const Vector& v)
+{
+    os << "(" << v.x << ", " << v.y << ")";
+    return os;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    Vector a(1, 2), b(2, 3), c;
+    
+    // c = a - b; (a, b 변화 없음)
+    c = a - b;
+    cout << a << " , " << b << " , " << c << endl;
+    // 출력: (1, 2) , (2, 3) , (-1, -1)
+    
+    // a += b; (a를 반환)
+    a += b;
+    cout << a << " , " << b << " , " << c << endl;
+    // 출력: (3, 5) , (2, 3) , (-1, -1)
+    
+    // a -= c; (a를 반환)
+    a -= c;
+    cout << a << " , " << b << " , " << c << endl;
+    // 출력: (4, 6) , (2, 3) , (-1, -1)
+    
+    return 0;
+}
+```
+
+### 10_3장
+
+> 10장 연습문제 Programming 1번(426쪽)  == 연산자는 두 객체 멤버 배열 공간 크기 다르면 false 
+```cpp
+//예시 코드
+int main() 
+{ 
+	Array a1(10), a2(10), a3(10); 
+	a1[0] = 1; a1[1] = 2; a1[2] = 3; 
+	a1[3] = 4; a2[0] = 1; a2[1] = 2; 
+	a2[2] = 3; a2[3] = 4; a3 = a1; a3[3] = 5; 
+	cout << ＂a1 배열은 : ＂ << a1 << endl; 
+	
+	/* 
+	1 2 3 4 0 0 ... cout << ＂a2 배열은 : ＂ << a2 << endl; 
+	1 2 3 4 0 0 ... cout << ＂a3 배열은 : ＂ << a3 << endl; 
+	1 2 3 5 0 0 ... cout << ＂a1 == a2 을 중복 정의 : ＂ << (a1 == a2) << endl;          1 cout << ＂a1 != a3 을 중복 정의 : ＂ << (a1 != a3) << endl; 
+	1 cout << ＂a3 = a1 을 중복 정의 : " << (a3 = a1) << endl; 
+	1 2 3 4 0 0 ... return 0; } 
+	*/
+```
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Array
+{
+private:
+    int *data;      // 저장 공간
+    int size;       // data 배열 크기 저장
+    
+public:
+    // 생성자
+    Array(int size = 10)
+    {
+        this->size = size;
+        data = new int[size];
+        
+        // 배열 초기화 (0으로)
+        for (int i = 0; i < size; i++)
+            data[i] = 0;
+    }
+    
+    // 소멸자
+    ~Array()
+    {
+        delete[] data;
+    }
+    
+    // getSize()
+    int getSize() const
+    {
+        return size;
+    }
+    
+    // operator= (할당 연산자)
+    // a3 = a1;
+    Array& operator=(const Array& other)
+    {
+        // 자기 자신에 대한 할당 체크
+        if (this == &other)
+            return *this;
+        
+        // 기존 메모리 해제
+        delete[] data;
+        
+        // 새로운 크기로 메모리 할당
+        size = other.size;
+        data = new int[size];
+        
+        // 배열 내용 복사
+        for (int i = 0; i < size; i++)
+            data[i] = other.data[i];
+        
+        return *this;
+    }
+    
+    // operator[] (배열 접근)
+    // a1[0] = 1;
+    int& operator[](int index)
+    {
+        if (index < 0 || index >= size)
+        {
+            cout << "배열 범위 초과!" << endl;
+            return data[0];  // 임시방편
+        }
+        return data[index];
+    }
+    
+    // operator[] const (읽기 전용)
+    const int& operator[](int index) const
+    {
+        if (index < 0 || index >= size)
+        {
+            cout << "배열 범위 초과!" << endl;
+            return data[0];
+        }
+        return data[index];
+    }
+    
+    // operator== (동등 비교)
+    // a1 == a2
+    bool operator==(const Array& other) const
+    {
+        // 크기 다르면 false
+        if (size != other.size)
+            return false;
+        
+        // 모든 원소 비교
+        for (int i = 0; i < size; i++)
+        {
+            if (data[i] != other.data[i])
+                return false;
+        }
+        
+        return true;
+    }
+    
+    // operator!= (부등 비교)
+    // a1 != a3
+    bool operator!=(const Array& other) const
+    {
+        return !(*this == other);
+    }
+    
+    // operator<< (출력)
+    friend ostream& operator<<(ostream& os, const Array& arr);
+};
+
+// operator<< 구현 (비멤버 함수)
+ostream& operator<<(ostream& os, const Array& arr)
+{
+    for (int i = 0; i < arr.size; i++)
+    {
+        os << arr.data[i];
+        if (i < arr.size - 1)
+            os << " ";
+    }
+    return os;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    Array a1(10), a2(10), a3(10);
+    
+    a1[0] = 1;
+    a1[1] = 2;
+    a1[2] = 3;
+    a1[3] = 4;
+    
+    a2[0] = 1;
+    a2[1] = 2;
+    a2[2] = 3;
+    a2[3] = 4;
+    
+    a3 = a1;
+    a3[3] = 5;
+    
+    cout << "a1 배열은 : " << a1 << endl;
+    // 출력: 1 2 3 4 0 0 0 0 0 0
+    
+    cout << "a2 배열은 : " << a2 << endl;
+    // 출력: 1 2 3 4 0 0 0 0 0 0
+    
+    cout << "a3 배열은 : " << a3 << endl;
+    // 출력: 1 2 3 5 0 0 0 0 0 0
+    
+    cout << "a1 == a2 을 중복 정의 : " << (a1 == a2) << endl;
+    // 출력: 1 (true)
+    
+    cout << "a1 != a3 을 중복 정의 : " << (a1 != a3) << endl;
+    // 출력: 1 (true)
+    
+    cout << "a3 = a1 을 중복 정의 : " << (a3 = a1) << endl;
+    // 출력: 1 2 3 4 0 0 0 0 0 0
+    
+    return 0;
+}
+```
+
