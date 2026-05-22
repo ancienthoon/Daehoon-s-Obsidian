@@ -1,4 +1,4 @@
-# 📚 토익 비법세끼 - 핵심 문법 완전 정리
+# 📚 토익 비법 - 핵심 문법 완전 정리
 
 > **출처**: 비법세끼 교재 (PART 5 문법 전략) **태그**: #토익 #PART5 #문법 #비법세끼
 
@@ -36,10 +36,10 @@
 
 #### 명사의 형태
 
-|일반 명사 어미|사람 명사 어미|
-|---|---|
-|-ment / -ness / -sion / -tion / -ence|-ee / -er / -or / -st|
-|-ty / -ance / -sis / -th / -sm|-ant / -ent|
+| 일반 명사 어미                              | 사람 명사 어미              |
+| ------------------------------------- | --------------------- |
+| -ment / -ness / -sion / -tion / -ence | -ee / -er / -or / -st |
+| -ty / -ance / -sis / -th / -sm        | -ant / -ent           |
 
 #### a, the, 소유격 + 가산명사
 
@@ -104,7 +104,7 @@
 
 ### 4️⃣ 부사 : 바람둥이
 
-#### 부사는 쓸데기 없는 놈! **바람둥이**라서 부사쇼!
+#### 부사는 쓰잘데기 없는 놈! **바람둥이**라서 부사쇼!
 
 #### 부사쇼
 
@@ -135,31 +135,31 @@ to      → R
 
 ### 2️⃣ 가산 명사 vs 불가산 명사
 
-|가산 명사|불가산 명사|
-|---|---|
-|an approach|access|
-|a certificate|certification|
-|a pollutant|pollution|
-|a suitcase, a bag|baggage, luggage|
-|an item, a product, a commodity|merchandise|
-|a tool|equipment|
-|a letter|mail|
-|a fact, a tip|information|
-|an opinion, a suggestion|advice|
-|a permit|permission|
-|potentialities|potential|
-|a machine|machinery|
-|a task|work|
-|interests|interest|
-|a document|documentation|
+| 가산 명사                           | 불가산 명사           |
+| ------------------------------- | ---------------- |
+| an approach                     | access           |
+| a certificate                   | certification    |
+| a pollutant                     | pollution        |
+| a suitcase, a bag               | baggage, luggage |
+| an item, a product, a commodity | merchandise      |
+| a tool                          | equipment        |
+| a letter                        | mail             |
+| a fact, a tip                   | information      |
+| an opinion, a suggestion        | advice           |
+| a permit                        | permission       |
+| potentialities                  | potential        |
+| a machine                       | machinery        |
+| a task                          | work             |
+| interests                       | interest         |
+| a document                      | documentation    |
 
 ### 3️⃣ ing로 끝나는 순수 명사 (형용사가 꾸밈)
 
-recycling, planning, opening, pricing, catering, widening, urging, hiking, marketing, testing, meeting, seating, advertising, finding, dining, belonging, training, founding, hiring
+**recycling, planning, opening, pricing, catering, widening, urging, hiking, marketing, testing, meeting, seating, advertising, finding, dining, belonging, training, founding, hiring**
 
 ### 4️⃣ -s로 끝나는 순수 명사
 
-details, news, business, needs, address, particulars, specifics, progress
+**details, news, business, needs, address, particulars, specifics, progress**
 
 ### 5️⃣ -thing, -body, -one으로 끝나는 명사
 
@@ -177,15 +177,15 @@ details, news, business, needs, address, particulars, specifics, progress
 
 ### 7️⃣ 인칭대명사
 
-|인칭|수|주격|소유격|목적격|소유대명사|재귀대명사|
-|---|---|---|---|---|---|---|
-|1인칭|단수|I|my|me|mine|myself|
-||복수|we|our|us|ours|ourselves|
-|2인칭|-|you|your|you|yours|yourself/yourselves|
-|3인칭|단수(여)|she|her|her|hers|herself|
-||단수(남)|he|his|him|his|himself|
-||단수(것)|it|its|it|-|itself|
-||복수|they|their|them|theirs|themselves|
+| 인칭  | 수     | 주격   | 소유격   | 목적격  | 소유대명사  | 재귀대명사               |
+| --- | ----- | ---- | ----- | ---- | ------ | ------------------- |
+| 1인칭 | 단수    | I    | my    | me   | mine   | myself              |
+|     | 복수    | we   | our   | us   | ours   | ourselves           |
+| 2인칭 | -     | you  | your  | you  | yours  | yourself/yourselves |
+| 3인칭 | 단수(여) | she  | her   | her  | hers   | herself             |
+|     | 단수(남) | he   | his   | him  | his    | himself             |
+|     | 단수(것) | it   | its   | it   | -      | itself              |
+|     | 복수    | they | their | them | theirs | themselves          |
 
 #### 시험 포인트
 
