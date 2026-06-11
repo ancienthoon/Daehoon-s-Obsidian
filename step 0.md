@@ -2713,3 +2713,4 @@ tail -f logs/trading.log
 |`backtest.py`|과거 데이터 기반 전략 성능 백테스팅|
 
 > 모든 함수는 한국어 docstring, 타입 힌트, 구체적인 예외 처리를 포함합니다.
+
