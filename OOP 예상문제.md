@@ -1047,4 +1047,250 @@ int main() {
 }
 ```
 
+## 18번
+
+```cpp
+class Num {
+    int val;
+public:
+    Num(int v = 0) : val(v) {}
+    Num(const Num& n) : val(n.val) {
+        cout << "복사생성자\n";
+    }
+    virtual ~Num() {}
+    Num& operator=(const Num& n) {
+        cout << "operator=\n";
+        val = n.val * 2;
+        return *this;
+    }
+    Num operator+(const Num& n) {
+        return Num(val + n.val);
+    }
+    bool operator==(const Num& n) {
+        return val == n.val;
+    }
+    virtual void print() { cout << "Num:" << val << "\n"; }
+    int get() { return val; }
+};
+
+class Special : public Num {
+    int bonus;
+public:
+    Special(int v, int b) : Num(v), bonus(b) {}
+    void print() { cout << "Special:" << get() + bonus << "\n"; }
+};
+
+Num& bigger(Num& a, Num& b) {
+    return a.get() >= b.get() ? a : b;
+}
+
+int main() {
+    Num* a = new Special(10, 5);
+    Num b(20);
+    a->print();
+    Num c = bigger(*a, b);
+    bigger(*a, b) = c;
+    cout << b.get() << "\n";
+    c.print();
+    delete a;
+}
+```
+
+## 19번
+
+```cpp
+class Num {
+    int val;
+public:
+    Num(int v = 0) : val(v) {}
+    Num(const Num& n) : val(n.val) {
+        cout << "복사생성자\n";
+    }
+    virtual ~Num() {}
+    Num& operator=(const Num& n) {
+        cout << "operator=\n";
+        val = n.val * 2;
+        return *this;
+    }
+    virtual Num operator+(const Num& n) {
+        return Num(val + n.val);
+    }
+    bool operator==(const Num& n) {
+        return val == n.val;
+    }
+    virtual void print() { cout << "Num:" << val << "\n"; }
+    int get() { return val; }
+};
+
+class Special : public Num {
+    int bonus;
+public:
+    Special(int v, int b) : Num(v), bonus(b) {}
+    Num operator+(const Num& n) {
+        return Num(get() + bonus + n.get());
+    }
+    void print() { cout << "Special:" << get() + bonus << "\n"; }
+};
+
+Num& bigger(Num& a, Num& b) {
+    return a.get() >= b.get() ? a : b;
+}
+
+int main() {
+    Num* a = new Special(10, 5);
+    Num b(20);
+    a->print();
+    Num c = *a + b;
+    Num d = bigger(*a, b);
+    c.print();
+    d.print();
+    bigger(*a, b) = c;
+    cout << b.get() << "\n";
+    delete a;
+}
+```
+
+## 20번
+
+```cpp
+class Shape {
+    static int count;
+public:
+    Shape() { count++; }
+    Shape(const Shape& s) { count++; }
+    virtual ~Shape() { count--; }
+    virtual void draw() = 0;
+    static int getCount() { return count; }
+};
+int Shape::count = 0;
+
+class Rect : public Shape {
+    int w;
+public:
+    Rect(int w) : w(w) {}
+    Rect(const Rect& r) : Shape(r), w(r.w) {}
+    void draw() { cout << "Rect " << w << "\n"; }
+};
+
+void render(Shape& s) { s.draw(); }
+
+int main() {
+    Rect r1(10), r2(20);
+    Rect r3 = r1;
+    cout << Shape::getCount() << "\n";
+    render(r1);
+    render(r2);
+    Shape* p = new Rect(r2);
+    cout << Shape::getCount() << "\n";
+    p->draw();
+    delete p;
+    cout << Shape::getCount() << "\n";
+}
+```
+
+## 21번
+
+```cpp
+class Animal {
+public:
+    Animal() { cout << "Animal 생성자\n"; }
+    Animal(const Animal& a) { cout << "Animal 복사생성자\n"; }
+    virtual ~Animal() { cout << "Animal 소멸자\n"; }
+    virtual void speak() { cout << "...\n"; }
+    void run() { cout << "Animal run\n"; }
+};
+
+class Dog : public Animal {
+public:
+    Dog() { cout << "Dog 생성자\n"; }
+    Dog(const Dog& d) : Animal(d) { cout << "Dog 복사생성자\n"; }
+    ~Dog() { cout << "Dog 소멸자\n"; }
+    void speak() { cout << "멍멍\n"; }
+    void run() { cout << "Dog run\n"; }
+};
+
+Animal& getRef(Dog& d) { return d; }
+
+int main() {
+    Dog d1;
+    Animal* a = new Dog();
+    Animal& r = getRef(d1);
+    Animal b = r;
+    r.speak();  r.run();
+    b.speak();  b.run();
+    a->speak(); a->run();
+    delete a;
+}
+```
+
+## 22번
+
+```cpp
+class Num {
+    int val;
+public:
+    Num(int v = 0) : val(v) {}
+    Num(const Num& n) : val(n.val) {
+        cout << "복사생성자\n";
+    }
+    Num& operator=(const Num& n) {
+        cout << "operator=\n";
+        val = n.val + 10;
+        return *this;
+    }
+    Num operator+(const Num& n) {
+        return Num(val + n.val);
+    }
+    int get() { return val; }
+};
+
+Num& bigger(Num& a, Num& b) {
+    return a.get() >= b.get() ? a : b;
+}
+
+int main() {
+    Num a(10), b(30), c(20);
+    bigger(a, b) = c;
+    Num d = a + c;
+    Num e = bigger(b, c);
+    cout << a.get() << " " << b.get() << "\n";
+    cout << d.get() << " " << e.get() << "\n";
+}
+```
+
+## 23번
+
+```cpp
+class Box {
+    int val;
+public:
+    Box(int v = 0) : val(v) {}
+    Box(const Box& b) : val(b.val) {
+        cout << "복사생성자\n";
+    }
+    Box& operator=(const Box& b) {
+        cout << "operator=\n";
+        val = b.val * 2;
+        return *this;
+    }
+    Box operator+(const Box& b) {
+        return Box(val + b.val);
+    }
+    int get() { return val; }
+};
+
+Box& bigger(Box& a, Box& b) {
+    return a.get() >= b.get() ? a : b;
+}
+
+int main() {
+    Box a(10), b(20);
+    Box c = bigger(a, b);
+    Box d = a + b;
+    c = d;
+    cout << a.get() << " " << b.get() << "\n";
+    cout << c.get() << " " << d.get() << "\n";
+}
+```
+
 [[OOP 과제]]
