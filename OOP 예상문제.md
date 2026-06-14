@@ -1047,7 +1047,7 @@ int main() {
 }
 ```
 
-## 18번
+### 18번
 
 ```cpp
 class Num {
@@ -1096,7 +1096,7 @@ int main() {
 }
 ```
 
-## 19번
+### 19번
 
 ```cpp
 class Num {
@@ -1150,7 +1150,7 @@ int main() {
 }
 ```
 
-## 20번
+### 20번
 
 ```cpp
 class Shape {
@@ -1188,7 +1188,7 @@ int main() {
 }
 ```
 
-## 21번
+### 21번
 
 ```cpp
 class Animal {
@@ -1223,7 +1223,7 @@ int main() {
 }
 ```
 
-## 22번
+### 22번
 
 ```cpp
 class Num {
@@ -1258,7 +1258,7 @@ int main() {
 }
 ```
 
-## 23번
+### 23번
 
 ```cpp
 class Box {
