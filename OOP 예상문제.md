@@ -1293,4 +1293,185 @@ int main() {
 }
 ```
 
+### 24번
+
+```cpp
+class Animal {
+public:
+    Animal() { cout << "Animal 생성자\n"; }
+    Animal(const Animal& a) { cout << "Animal 복사생성자\n"; }
+    virtual ~Animal() { cout << "Animal 소멸자\n"; }
+    virtual void speak() { cout << "...\n"; }
+};
+
+class Dog : public Animal {
+public:
+    Dog() { cout << "Dog 생성자\n"; }
+    Dog(const Dog& d) : Animal(d) { cout << "Dog 복사생성자\n"; }
+    ~Dog() { cout << "Dog 소멸자\n"; }
+    void speak() { cout << "멍멍\n"; }
+};
+
+int main() {
+    Dog d;
+    Animal a = d;
+    Dog* p = new Dog();
+    p->speak();
+    delete p;
+}
+```
+
+### 25번
+
+```cpp
+class Shape {
+    static int count;
+public:
+    Shape() { count++; }
+    Shape(const Shape& s) { count++; }
+    virtual ~Shape() { count--; }
+    virtual void draw() = 0;
+    static int getCount() { return count; }
+};
+int Shape::count = 0;
+
+class Circle : public Shape {
+    int r;
+public:
+    Circle(int r) : r(r) {}
+    void draw() { cout << "Circle " << r << "\n"; }
+};
+
+void render(Shape& s) { s.draw(); }
+
+int main() {
+    Circle c1(10);
+    Shape* arr[2];
+    arr[0] = new Circle(c1);
+    arr[1] = new Circle(20);
+    cout << Shape::getCount() << "\n";
+    for (int i = 0; i < 2; i++) {
+        render(*arr[i]);
+        delete arr[i];
+    }
+    cout << Shape::getCount() << "\n";
+}
+```
+
+### 26번
+
+```cpp
+class Box {
+    int val;
+public:
+    Box(int v = 0) : val(v) {}
+    Box(const Box& b) : val(b.val) {
+        cout << "복사생성자\n";
+    }
+    Box& operator=(const Box& b) {
+        cout << "operator=\n";
+        val = b.val * 2;
+        return *this;
+    }
+    Box operator+(const Box& b) {
+        return Box(val + b.val);
+    }
+    int get() { return val; }
+};
+
+Box& bigger(Box& a, Box& b) {
+    return a.get() >= b.get() ? a : b;
+}
+
+int main() {
+    Box a(10), b(30), c(20);
+    Box d = a + b;
+    bigger(a, b) = c;
+    Box e = bigger(b, c);
+    cout << a.get() << " " << b.get() << "\n";
+    cout << d.get() << " " << e.get() << "\n";
+}
+```
+
+### 27번
+
+```cpp
+class Animal {
+public:
+    Animal() { cout << "Animal 생성자\n"; }
+    Animal(const Animal& a) { cout << "Animal 복사생성자\n"; }
+    virtual ~Animal() { cout << "Animal 소멸자\n"; }
+    virtual void speak() { cout << "...\n"; }
+    void run() { cout << "Animal run\n"; }
+};
+
+class Dog : public Animal {
+public:
+    Dog() { cout << "Dog 생성자\n"; }
+    Dog(const Dog& d) : Animal(d) { cout << "Dog 복사생성자\n"; }
+    ~Dog() { cout << "Dog 소멸자\n"; }
+    void speak() { cout << "멍멍\n"; }
+    void run() { cout << "Dog run\n"; }
+};
+
+Animal& getRef(Dog& d) { return d; }
+
+int main() {
+    Animal* a = new Dog();
+    Dog d;
+    Animal& r = getRef(d);
+    Animal b = r;
+    a->speak();  a->run();
+    b.speak();   b.run();
+    r.speak();   r.run();
+    delete a;
+}
+```
+
+### 28번
+
+```cpp
+class Num {
+    int val;
+public:
+    Num(int v = 0) : val(v) {}
+    Num(const Num& n) : val(n.val) {
+        cout << "복사생성자\n";
+    }
+    virtual ~Num() {}
+    Num& operator=(const Num& n) {
+        cout << "operator=\n";
+        val = n.val * 2;
+        return *this;
+    }
+    Num operator+(const Num& n) {
+        return Num(val + n.val);
+    }
+    virtual void print() { cout << "Num:" << val << "\n"; }
+    int get() { return val; }
+};
+
+class Special : public Num {
+    int bonus;
+public:
+    Special(int v, int b) : Num(v), bonus(b) {}
+    void print() { cout << "Special:" << get() + bonus << "\n"; }
+};
+
+Num& bigger(Num& a, Num& b) {
+    return a.get() >= b.get() ? a : b;
+}
+
+int main() {
+    Num* a = new Special(10, 5);
+    Num b(25);
+    Num c = bigger(*a, b);
+    a->print();
+    c.print();
+    bigger(*a, b) = c;
+    cout << b.get() << "\n";
+    delete a;
+}
+```
+
 [[OOP 과제]]
