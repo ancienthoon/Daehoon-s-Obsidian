@@ -366,3 +366,6 @@ while ((pos = s.find(from, pos)) != string::npos) {
 ### 자주 하는 실수
 
 > ⚠️ `find()` 실패 시 반환값은 `-1`이 아닌 **`string::npos`** 로 비교해야 함 ⚠️ `s[i]` 는 범위 검사 없음 → 인덱스 초과 시 undefined behavior, 안전하게 쓰려면 `s.at(i)` ⚠️ `substr(pos, n)` 의 두 번째 인자는 **길이(n)** 이지 끝 인덱스가 아님 ⚠️ `c_str()` 로 얻은 포인터는 string 변경 시 **무효화** 될 수 있음 → 즉시 사용하거나 복사 ⚠️ `stoi()`, `stod()` 등은 변환 불가 문자열 입력 시 **예외** 발생 → try-catch 처리 권장 ⚠️ `size_t`는 부호 없는 정수 → `s.size() - 1` 에서 size가 0이면 **언더플로우** 발생
+
+
+[[문자열 파싱]]
