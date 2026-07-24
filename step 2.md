@@ -129,7 +129,7 @@ to      → R
 
 ## 📖 02. 명사 (심화)
 
-### 1️⃣ 어디서 뒤는 명사
+### 1️⃣ 어더소 뒤는 무조건 명사
 
 > 관사, 소유격, 한정사 뒤에는 항상 명사가 답이다.
 
@@ -256,11 +256,11 @@ to      → R
 
 ### 2️⃣ 수량형용사
 
-||가산명사|불가산명사|
-|---|---|---|
-|X|few|little|
-|쪼매|a few|a little|
-|많은|many|much|
+| 가산명사 | 불가산명사 |          |
+| ---- | ----- | -------- |
+| X    | few   | little   |
+| 쪼매   | a few | a little |
+| 많은   | many  | much     |
 
 1. a lot of(many), several, (a)few, various, numerous, these, those → 가산복수N
 2. much / (a)little / a 형용사 amount, deal of → 불가산N
@@ -420,7 +420,7 @@ definitely, undoubtedly, without a doubt, surely
 
 ### 1️⃣2️⃣ 혼동 부사들
 
-1. high - 높게 / **highly** - 고도로 (highly + qualified/trained/successful...)
+1. **high** - 높게 / **highly** - 고도로 (highly + qualified/trained/successful...)
 2. **late** - 늦게 / **lately** - 최근에
 3. **close** - 가까운/닫다 / **closely** - 밀접하게, 면밀하게
 4. **hard** - 열심히 / **hardly** - 거의 ~없다 (= seldom, scarcely, barely, rarely, never)
