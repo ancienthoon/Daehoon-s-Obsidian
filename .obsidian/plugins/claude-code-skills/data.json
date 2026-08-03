@@ -1,0 +1,8 @@
+{
+  "claudeBinPath": "C:\\Users\\user\\AppData\\Roaming\\npm\\claude.cmd",
+  "workingDirectory": "",
+  "timeout": 120000,
+  "maxBudgetUsd": 0.25,
+  "outputFolder": "",
+  "enabledSkills": []
+}
