@@ -394,7 +394,7 @@ p = new Refrigerator(); p->turnON();    // 냉장고 켜짐
 
 > 📅 작성일: 2026-05-14 🏫 과목: C++ / 자료구조 📖 단원: 9장 — 다형성, 가상 함수, 순수 가상 함수
 
-#cpp #다형성 #polymorphism #virtual #추상클래스
+#cpp #다형성 #polymorphism #virtual #추상클래스 #oop
 
 [[has-a 관계]] [[is-a 관계]] [[상속관계]]
 

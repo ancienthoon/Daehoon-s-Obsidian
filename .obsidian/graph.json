@@ -2,29 +2,50 @@
   "collapse-filter": false,
   "search": "",
   "showTags": true,
-  "showAttachments": true,
+  "showAttachments": false,
   "hideUnresolved": true,
   "showOrphans": true,
   "collapse-color-groups": false,
   "colorGroups": [
     {
-      "query": "tag:#2학기전공과목  ",
+      "query": "tag: 파이썬",
       "color": {
         "a": 1,
-        "rgb": 2818303
+        "rgb": 16514816
+      }
+    },
+    {
+      "query": "tag: 선형대수",
+      "color": {
+        "a": 1,
+        "rgb": 16711680
+      }
+    },
+    {
+      "query": "tag: oop",
+      "color": {
+        "a": 1,
+        "rgb": 10879231
+      }
+    },
+    {
+      "query": "tag: #논리설계  ",
+      "color": {
+        "a": 1,
+        "rgb": 16711829
       }
     }
   ],
-  "collapse-display": true,
+  "collapse-display": false,
   "showArrow": false,
   "textFadeMultiplier": 3,
-  "nodeSizeMultiplier": 1.74655870445344,
+  "nodeSizeMultiplier": 3.284771099346,
   "lineSizeMultiplier": 0.886780231880303,
   "collapse-forces": false,
-  "centerStrength": 0.405792587978823,
+  "centerStrength": 0.256306446589847,
   "repelStrength": 20,
   "linkStrength": 0,
   "linkDistance": 500,
-  "scale": 0.04215995332586286,
-  "close": false
+  "scale": 0.02400650580140047,
+  "close": true
 }
