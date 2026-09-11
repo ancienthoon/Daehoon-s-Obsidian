@@ -34,6 +34,13 @@
         "a": 1,
         "rgb": 16711829
       }
+    },
+    {
+      "query": "tag: #컴퓨터구조  ",
+      "color": {
+        "a": 1,
+        "rgb": 5431473
+      }
     }
   ],
   "collapse-display": false,
@@ -46,6 +53,6 @@
   "repelStrength": 20,
   "linkStrength": 0,
   "linkDistance": 500,
-  "scale": 0.02400650580140047,
+  "scale": 0.03669418939808786,
   "close": true
 }
