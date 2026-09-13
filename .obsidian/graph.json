@@ -1,7 +1,7 @@
 {
   "collapse-filter": false,
   "search": "",
-  "showTags": true,
+  "showTags": false,
   "showAttachments": false,
   "hideUnresolved": true,
   "showOrphans": true,
@@ -41,18 +41,32 @@
         "a": 1,
         "rgb": 5431473
       }
+    },
+    {
+      "query": "tag:#자료구조  ",
+      "color": {
+        "a": 1,
+        "rgb": 2031360
+      }
+    },
+    {
+      "query": "tag:토익",
+      "color": {
+        "a": 1,
+        "rgb": 5395168
+      }
     }
   ],
   "collapse-display": false,
   "showArrow": false,
   "textFadeMultiplier": 3,
-  "nodeSizeMultiplier": 3.284771099346,
+  "nodeSizeMultiplier": 5,
   "lineSizeMultiplier": 0.886780231880303,
   "collapse-forces": false,
-  "centerStrength": 0.256306446589847,
+  "centerStrength": 0,
   "repelStrength": 20,
   "linkStrength": 0,
   "linkDistance": 500,
-  "scale": 0.035567285087310316,
-  "close": true
+  "scale": 0.01372022392942703,
+  "close": false
 }

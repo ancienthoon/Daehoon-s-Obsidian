@@ -955,3 +955,5 @@ be + dedicated / devoted / committed + to V-ing
 ---
 
 _📌 이 노트는 비법세끼 교재 전체(p.1~28) 기반으로 정리된 토익 PART5 문법+어휘 핵심 정리입니다._
+
+#토익 
