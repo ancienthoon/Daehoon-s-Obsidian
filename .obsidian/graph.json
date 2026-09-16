@@ -55,6 +55,13 @@
         "a": 1,
         "rgb": 5395168
       }
+    },
+    {
+      "query": "tag:#디지털신호처리  ",
+      "color": {
+        "a": 1,
+        "rgb": 16743168
+      }
     }
   ],
   "collapse-display": false,
