@@ -1,7 +1,7 @@
 {
   "collapse-filter": false,
   "search": "",
-  "showTags": false,
+  "showTags": true,
   "showAttachments": false,
   "hideUnresolved": true,
   "showOrphans": true,
@@ -11,7 +11,7 @@
       "query": "tag: 파이썬",
       "color": {
         "a": 1,
-        "rgb": 16514816
+        "rgb": 3501989
       }
     },
     {
@@ -46,14 +46,14 @@
       "query": "tag:#자료구조  ",
       "color": {
         "a": 1,
-        "rgb": 2031360
+        "rgb": 16771584
       }
     },
     {
       "query": "tag:토익",
       "color": {
         "a": 1,
-        "rgb": 5395168
+        "rgb": 1464374
       }
     },
     {
@@ -61,6 +61,13 @@
       "color": {
         "a": 1,
         "rgb": 16743168
+      }
+    },
+    {
+      "query": "cpp",
+      "color": {
+        "a": 1,
+        "rgb": 17538
       }
     }
   ],
@@ -74,6 +81,6 @@
   "repelStrength": 20,
   "linkStrength": 0,
   "linkDistance": 500,
-  "scale": 0.0078125,
-  "close": false
+  "scale": 0.01372022392942703,
+  "close": true
 }
