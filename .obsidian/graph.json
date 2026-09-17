@@ -11,7 +11,7 @@
       "query": "tag: 파이썬",
       "color": {
         "a": 1,
-        "rgb": 3501989
+        "rgb": 16768081
       }
     },
     {
@@ -46,7 +46,7 @@
       "query": "tag:#자료구조  ",
       "color": {
         "a": 1,
-        "rgb": 16771584
+        "rgb": 16777215
       }
     },
     {
@@ -74,13 +74,13 @@
   "collapse-display": false,
   "showArrow": false,
   "textFadeMultiplier": 3,
-  "nodeSizeMultiplier": 5,
-  "lineSizeMultiplier": 0.940828402366864,
+  "nodeSizeMultiplier": 0.72108377452507,
+  "lineSizeMultiplier": 0.428090937402678,
   "collapse-forces": false,
   "centerStrength": 0,
-  "repelStrength": 20,
-  "linkStrength": 0,
+  "repelStrength": 0,
+  "linkStrength": 1,
   "linkDistance": 500,
-  "scale": 0.011417055258457641,
+  "scale": 0.2726860817137683,
   "close": false
 }
