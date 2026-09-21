@@ -1,6 +1,6 @@
 {
   "collapse-filter": false,
-  "search": "",
+  "search": "file:연결",
   "showTags": true,
   "showAttachments": false,
   "hideUnresolved": true,
@@ -81,6 +81,6 @@
   "repelStrength": 0,
   "linkStrength": 1,
   "linkDistance": 500,
-  "scale": 0.2726860817137683,
+  "scale": 0.4788882052545201,
   "close": false
 }
