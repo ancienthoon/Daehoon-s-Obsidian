@@ -1,7 +1,7 @@
 {
   "collapse-filter": false,
   "search": "",
-  "showTags": false,
+  "showTags": true,
   "showAttachments": false,
   "hideUnresolved": true,
   "showOrphans": true,
@@ -68,6 +68,13 @@
       "color": {
         "a": 1,
         "rgb": 17538
+      }
+    },
+    {
+      "query": "tag:딥러닝기초",
+      "color": {
+        "a": 1,
+        "rgb": 1114367
       }
     }
   ],
