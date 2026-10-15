@@ -2,92 +2,29 @@
   "collapse-filter": false,
   "search": "",
   "showTags": true,
-  "showAttachments": true,
-  "hideUnresolved": true,
-  "showOrphans": false,
-  "collapse-color-groups": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": true,
   "colorGroups": [
     {
-      "query": "tag: 파이썬",
+      "query": "",
       "color": {
         "a": 1,
-        "rgb": 16768081
-      }
-    },
-    {
-      "query": "tag: 선형대수",
-      "color": {
-        "a": 1,
-        "rgb": 16711680
-      }
-    },
-    {
-      "query": "tag: oop",
-      "color": {
-        "a": 1,
-        "rgb": 10879231
-      }
-    },
-    {
-      "query": "tag: #논리설계  ",
-      "color": {
-        "a": 1,
-        "rgb": 16711829
-      }
-    },
-    {
-      "query": "tag: #컴퓨터구조  ",
-      "color": {
-        "a": 1,
-        "rgb": 5431473
-      }
-    },
-    {
-      "query": "tag:#자료구조  ",
-      "color": {
-        "a": 1,
-        "rgb": 16777215
-      }
-    },
-    {
-      "query": "tag:토익",
-      "color": {
-        "a": 1,
-        "rgb": 1464374
-      }
-    },
-    {
-      "query": "tag:#디지털신호처리  ",
-      "color": {
-        "a": 1,
-        "rgb": 16743168
-      }
-    },
-    {
-      "query": "cpp",
-      "color": {
-        "a": 1,
-        "rgb": 17538
-      }
-    },
-    {
-      "query": "tag:딥러닝기초",
-      "color": {
-        "a": 1,
-        "rgb": 1114367
+        "rgb": 14701138
       }
     }
   ],
   "collapse-display": false,
   "showArrow": false,
-  "textFadeMultiplier": 3,
-  "nodeSizeMultiplier": 0.647835565244472,
-  "lineSizeMultiplier": 0.428090937402678,
+  "textFadeMultiplier": 0,
+  "nodeSizeMultiplier": 1,
+  "lineSizeMultiplier": 1,
   "collapse-forces": false,
-  "centerStrength": 0,
-  "repelStrength": 0,
+  "centerStrength": 0.518713248970312,
+  "repelStrength": 10,
   "linkStrength": 1,
-  "linkDistance": 500,
-  "scale": 0.15544075303718133,
+  "linkDistance": 250,
+  "scale": 0.2500769002674299,
   "close": false
 }
