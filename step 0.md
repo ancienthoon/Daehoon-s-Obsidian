@@ -2700,17 +2700,18 @@ tail -f logs/trading.log
 
 ## 📋 전체 코드 요약
 
-|모듈|역할|
-|---|---|
-|`config/settings.yaml`|모든 수치를 관리하여 매직 넘버 제거|
-|`src/data/fetcher.py`|pykrx / FinanceDataReader 기반 데이터 수집 + 캐싱|
-|`src/indicators/technical.py`|pandas-ta 기반 RSI, MACD, 볼린저 밴드 계산|
-|`src/strategy/rsi_macd.py`|RSI + MACD 복합 신호 생성|
-|`src/broker/paper_broker.py`|수수료·세금·슬리피지 반영 주문 시뮬레이션|
-|`src/portfolio/manager.py`|평균 단가 계산, 손익 추적, 거래 내역 저장|
-|`src/risk/manager.py`|손절/익절, 일일 손실 한도, 포트폴리오 위험도 체크|
-|`src/reporter/visualizer.py`|matplotlib 정적 그래프 + plotly 인터랙티브 차트|
-|`backtest.py`|과거 데이터 기반 전략 성능 백테스팅|
+| 모듈                            | 역할                                       |
+| ----------------------------- | ---------------------------------------- |
+| `config/settings.yaml`        | 모든 수치를 관리하여 매직 넘버 제거                     |
+| `src/data/fetcher.py`         | pykrx / FinanceDataReader 기반 데이터 수집 + 캐싱 |
+| `src/indicators/technical.py` | pandas-ta 기반 RSI, MACD, 볼린저 밴드 계산        |
+| `src/strategy/rsi_macd.py`    | RSI + MACD 복합 신호 생성                      |
+| `src/broker/paper_broker.py`  | 수수료·세금·슬리피지 반영 주문 시뮬레이션                  |
+| `src/portfolio/manager.py`    | 평균 단가 계산, 손익 추적, 거래 내역 저장                |
+| `src/risk/manager.py`         | 손절/익절, 일일 손실 한도, 포트폴리오 위험도 체크            |
+| `src/reporter/visualizer.py`  | matplotlib 정적 그래프 + plotly 인터랙티브 차트      |
+| `backtest.py`                 | 과거 데이터 기반 전략 성능 백테스팅                     |
+|                               |                                          |
 
 > 모든 함수는 한국어 docstring, 타입 힌트, 구체적인 예외 처리를 포함합니다.
 
