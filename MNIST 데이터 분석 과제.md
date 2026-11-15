@@ -1,9 +1,7 @@
 ---
 title: MNIST 데이터 분석 과제
 tags:
-  - 딥러닝
-  - MNIST
-  - keras
+  - 딥러닝기초
 ---
 
 # MNIST 데이터 분석 과제
