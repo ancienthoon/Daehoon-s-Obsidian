@@ -1,4 +1,5 @@
 {
   "theme": "obsidian",
-  "cssTheme": "Things"
+  "cssTheme": "Things",
+  "showRibbon": true
 }
