@@ -52,23 +52,30 @@ history = model.fit(x_train, y_train,
 test_loss, test_acc = model.evaluate(x_test, y_test, verbose=0)
 print(f"\nMNIST 시험 데이터 정확도: {test_acc*100:.2f}%")
 
-# ==================== 5. 직접 만든 28x28 숫자 이미지 10장 ====================
-def make_digit_image(d, size=28):
-    """검정 배경 + 흰색 숫자 (MNIST와 같은 형태)"""
-    img = Image.new('L', (size, size), 0)
-    draw = ImageDraw.Draw(img)
-    try:
-        font = ImageFont.truetype(
-            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 28)
-    except OSError:
-        font = ImageFont.load_default()
-    box = draw.textbbox((0, 0), str(d), font=font)
-    w, h = box[2] - box[0], box[3] - box[1]
-    draw.text(((size - w) / 2 - box[0], (size - h) / 2 - box[1]),
-              str(d), fill=255, font=font)
-    return np.array(img) / 255.0
+# ==================== 5. 내가 그린 손글씨 이미지 불러오기 ====================
+from google.colab import files
+uploaded = files.upload()   # 0.png ~ 9.png 10개를 한 번에 선택해서 업로드
 
-my_imgs = np.array([make_digit_image(d) for d in range(10)])
+def preprocess(path):
+    a = np.array(Image.open(path).convert('L')).astype(float)
+
+    if a.mean() > 127:           # 흰 배경이면 반전 (MNIST는 검정 배경, 흰 글씨)
+        a = 255 - a
+
+    ys, xs = np.where(a > 50)    # 숫자가 있는 영역만 잘라내기
+    a = a[ys.min():ys.max()+1, xs.min():xs.max()+1]
+
+    h, w = a.shape               # 긴 변이 20픽셀이 되도록 축소
+    s = 20 / max(h, w)
+    nw, nh = max(1, round(w * s)), max(1, round(h * s))
+    small = np.array(Image.fromarray(a.astype(np.uint8)).resize((nw, nh), Image.LANCZOS))
+
+    canvas = np.zeros((28, 28))  # 28x28 한가운데에 배치
+    top, left = (28 - nh) // 2, (28 - nw) // 2
+    canvas[top:top+nh, left:left+nw] = small
+    return canvas / 255.0
+
+my_imgs = np.array([preprocess(f'{d}.png') for d in range(10)])
 my_labels = np.arange(10)
 
 # ==================== 6. 내 이미지로 예측 ====================
